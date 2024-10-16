@@ -71,12 +71,34 @@ void bubble_sort(int array[]) {
 
 }
 
+void insertion_sort(int array[]) {
+    int i, j, temp;
+    printf("Insertion Sort\n");
+    printf("Starting array: ");
+    print_array(array);
+
+    for (i = 1; i < LENGTH; ++i) {
+        temp = array[i];
+        j = i-1;
+        while (j >= 0 && array[j] > temp) {
+            array[j+1] = array[j];
+            j = j-1;
+        }
+
+        array[j+1] = temp;
+        printf("Step %d: ", i);
+        print_array(array);
+    }
+
+}
+
+
 int main() {
     /*int array[LENGTH] = {5, 3, 8, 10, 2, 9, 6, 1, 4, 7};*/
     /*int array[LENGTH] = {3, -1, 4, 0, -5, 2, -3, 1, -4, 5};*/
-    //int array[LENGTH] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
-    int array[LENGTH] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int array[LENGTH] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+    //int array[LENGTH] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     
 
-    bubble_sort(array);
+    insertion_sort(array);
 }
