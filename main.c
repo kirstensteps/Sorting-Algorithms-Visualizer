@@ -1,19 +1,26 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <unistd.h>
 #define LENGTH 10
 
-void print_array(int array[]) {
+void print_array(int array[], int highlight1, int highlight2) {
     int i;
 
     for (i = 0; i < LENGTH; i++) {
-        printf("%d ", array[i]);
+        if (i == highlight1) {
+            printf("\033[31m%d\033[0m ", array[i]);
+        } else if (i == highlight2) {
+            printf("\033[32m%d\033[0m ", array[i]);
+        } else {
+            printf("%d ", array[i]);
+        }
     }
     printf("\n");
-
+    fflush(stdout);
 }
 
-void selection_sort(int array[]) {
+/*void selection_sort(int array[]) {
     int i, j, index, step = 0, temp;
     
     printf("Selection Sort\n");
@@ -69,25 +76,42 @@ void bubble_sort(int array[]) {
 
     }
 
-}
+}*/
 
 void insertion_sort(int array[]) {
     int i, j, temp;
     printf("Insertion Sort\n");
-    printf("Starting array: ");
-    print_array(array);
+    print_array(array, -1, -1);
+    sleep(1);
 
     for (i = 1; i < LENGTH; ++i) {
         temp = array[i];
         j = i-1;
+        printf("\033[H\033[J");
+        printf("Current element being considered (index %d): %d\n", i, temp);
+        print_array(array, i, -1);
+        sleep(3);
+
         while (j >= 0 && array[j] > temp) {
+            printf("\033[H\033[J");
+            printf("Comparing: \n");
+            print_array(array, j, i);
+            sleep(1);
+
             array[j+1] = array[j];
-            j = j-1;
+            j--;
+
+            printf("\033[H\033[J");
+            printf("Swapping: \n");
+            print_array(array, j+1, -1);
+            sleep(1);
         }
 
         array[j+1] = temp;
-        printf("Step %d: ", i);
-        print_array(array);
+        printf("\033[H\033[J");
+        printf("Step %d Complete:\n", i);
+        print_array(array, -1, -1);
+        sleep(1);
     }
 
 }
